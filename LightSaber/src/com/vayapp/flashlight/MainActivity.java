@@ -7,6 +7,7 @@ import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Camera;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.view.View;
@@ -37,11 +38,20 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				if (off) {
+					MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.lighton);
+					mp.start();
+					mp.seekTo(0);
+					
 					switchOn();
 					imageButton.setImageResource(R.drawable.off);
+					
 				}
 
 				else {
+					MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.lightoff);
+					mp.start();
+					mp.seekTo(0);
+					
 					switchOff();
 					imageButton.setImageResource(R.drawable.on);
 				}
@@ -54,6 +64,7 @@ public class MainActivity extends Activity {
 	public void switchOn() {
 		buildNotification(R.drawable.ic_launcher, "Flashlight", "Switched on!");
 
+		
 		off = false;
 		cameraObj = Camera.open();
 		Camera.Parameters cameraParams = cameraObj.getParameters();
@@ -66,6 +77,7 @@ public class MainActivity extends Activity {
 	public void switchOff() {
 		buildNotification(R.drawable.ic_launcher, "Flashlight", "Switched off!");
 
+		
 		off = true;
 		cameraObj.startPreview();
 		cameraObj.release();
@@ -89,5 +101,6 @@ public class MainActivity extends Activity {
 		NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		mNotificationManager.notify(999, mBuilder.build());
 	}
+		
 
 }
