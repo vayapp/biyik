@@ -21,6 +21,8 @@ public class MainActivity extends Activity {
 
 	boolean off = true;
 	ImageButton imageButton;
+	
+	MediaPlayer mp,mp2;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,17 +40,20 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				if (off) {
-					MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.lighton);
+					mp = MediaPlayer.create(getApplicationContext(), R.raw.lighton);
 					mp.start();
 					mp.seekTo(0);
 					
 					switchOn();
 					imageButton.setImageResource(R.drawable.off);
 					
+					mp2 = MediaPlayer.create(getApplicationContext(), R.raw.lighthumming);
+					mp2.setLooping(true);
+					mp2.start();
 				}
 
 				else {
-					MediaPlayer mp = MediaPlayer.create(getApplicationContext(), R.raw.lightoff);
+					mp = MediaPlayer.create(getApplicationContext(), R.raw.lightoff);
 					mp.start();
 					mp.seekTo(0);
 					
@@ -75,8 +80,10 @@ public class MainActivity extends Activity {
 	}
 
 	public void switchOff() {
+		mp2.stop();
+		mp2.prepareAsync();
+		
 		buildNotification(R.drawable.ic_launcher, "Flashlight", "Switched off!");
-
 		
 		off = true;
 		cameraObj.startPreview();
