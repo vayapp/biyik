@@ -39,15 +39,20 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				try {
+			
 
 					if (off) {
 						mp = MediaPlayer.create(getApplicationContext(),
 								R.raw.lighton);
 						mp.start();
 						mp.seekTo(0);
-
-						switchOn();
+						
+						try {
+							switchOn();
+						} catch (Exception e) {
+							e.getStackTrace();
+						}
+						
 						imageButton.setImageResource(R.drawable.off);
 
 						mp2 = MediaPlayer.create(getApplicationContext(),
@@ -61,13 +66,17 @@ public class MainActivity extends Activity {
 								R.raw.lightoff);
 						mp.start();
 						mp.seekTo(0);
-
-						switchOff();
+						
+						try {
+							switchOff();
+						} catch (Exception e) {
+							e.getStackTrace();
+						}
+						
 						imageButton.setImageResource(R.drawable.on);
 					}
-				} catch (Exception e) {
-				}
-			}
+				} 
+			
 
 		});
 
