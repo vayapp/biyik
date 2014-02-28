@@ -39,6 +39,8 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
+			
+			try{
 				if (off) {
 					mp = MediaPlayer.create(getApplicationContext(), R.raw.lighton);
 					mp.start();
@@ -59,7 +61,8 @@ public class MainActivity extends Activity {
 					
 					switchOff();
 					imageButton.setImageResource(R.drawable.on);
-				}
+					}
+			      }catch (Exception e) {}
 			}
 
 		});
