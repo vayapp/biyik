@@ -21,8 +21,8 @@ public class MainActivity extends Activity {
 
 	boolean off = true;
 	ImageButton imageButton;
-	
-	MediaPlayer mp,mp2;
+
+	MediaPlayer mp, mp2;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,30 +39,34 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-			
-			try{
-				if (off) {
-					mp = MediaPlayer.create(getApplicationContext(), R.raw.lighton);
-					mp.start();
-					mp.seekTo(0);
-					
-					switchOn();
-					imageButton.setImageResource(R.drawable.off);
-					
-					mp2 = MediaPlayer.create(getApplicationContext(), R.raw.lighthumming);
-					mp2.setLooping(true);
-					mp2.start();
-				}
+				try {
 
-				else {
-					mp = MediaPlayer.create(getApplicationContext(), R.raw.lightoff);
-					mp.start();
-					mp.seekTo(0);
-					
-					switchOff();
-					imageButton.setImageResource(R.drawable.on);
+					if (off) {
+						mp = MediaPlayer.create(getApplicationContext(),
+								R.raw.lighton);
+						mp.start();
+						mp.seekTo(0);
+
+						switchOn();
+						imageButton.setImageResource(R.drawable.off);
+
+						mp2 = MediaPlayer.create(getApplicationContext(),
+								R.raw.lighthumming);
+						mp2.setLooping(true);
+						mp2.start();
 					}
-			      }catch (Exception e) {}
+
+					else {
+						mp = MediaPlayer.create(getApplicationContext(),
+								R.raw.lightoff);
+						mp.start();
+						mp.seekTo(0);
+
+						switchOff();
+						imageButton.setImageResource(R.drawable.on);
+					}
+				} catch (Exception e) {
+				}
 			}
 
 		});
@@ -72,7 +76,6 @@ public class MainActivity extends Activity {
 	public void switchOn() {
 		buildNotification(R.drawable.ic_launcher, "Flashlight", "Switched on!");
 
-		
 		off = false;
 		cameraObj = Camera.open();
 		Camera.Parameters cameraParams = cameraObj.getParameters();
@@ -85,9 +88,9 @@ public class MainActivity extends Activity {
 	public void switchOff() {
 		mp2.stop();
 		mp2.prepareAsync();
-		
+
 		buildNotification(R.drawable.ic_launcher, "Flashlight", "Switched off!");
-		
+
 		off = true;
 		cameraObj.startPreview();
 		cameraObj.release();
@@ -111,6 +114,5 @@ public class MainActivity extends Activity {
 		NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		mNotificationManager.notify(999, mBuilder.build());
 	}
-		
 
 }
